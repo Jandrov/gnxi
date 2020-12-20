@@ -211,7 +211,7 @@ func parseElement(elem string) ([]interface{}, error) {
 	i := strings.Index(elem, "[")
 	if i < 0 {
 		if !idRe.MatchString(elem) {
-			return nil, fmt.Errorf("invalid node name: %q", elem)
+			//return nil, fmt.Errorf("invalid node name: %q", elem)
 		}
 		return []interface{}{elem}, nil
 	}

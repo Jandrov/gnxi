@@ -28,7 +28,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/google/gnxi/utils/credentials"
-	"github.com/google/gnxi/utils/xpath"
+	"github.com/Jandrov/gnxi/utils/xpath"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )
@@ -62,6 +62,7 @@ var (
 	xPathFlags       arrayFlags
 	pbPathFlags      arrayFlags
 	pbModelDataFlags arrayFlags
+	pathTarget       = flag.String("xpath_target", "CONFIG_DB", "name of the target for which the path is a member")
 	targetAddr       = flag.String("target_addr", "localhost:9339", "The target address in the format of host:port")
 	timeOut          = flag.Duration("time_out", 10*time.Second, "Timeout for the Get request, 10 seconds by default")
 	encodingName     = flag.String("encoding", "JSON_IETF", "value encoding format to be used")
@@ -95,12 +96,14 @@ func main() {
 		log.Exitf("Supported encodings: %s", strings.Join(gnmiEncodingList, ", "))
 	}
 
+	var prefix pb.Path
+	prefix.Target = *pathTarget
 	var pbPathList []*pb.Path
 	var pbModelDataList []*pb.ModelData
 	for _, xPath := range xPathFlags {
 		pbPath, err := xpath.ToGNMIPath(xPath)
 		if err != nil {
-			log.Exitf("error in parsing xpath %q to gnmi path", xPath)
+			log.Exitf("error in parsing xpath %q to gnmi path, %v", xPath, err)
 		}
 		pbPathList = append(pbPathList, pbPath)
 	}
@@ -119,6 +122,7 @@ func main() {
 	}
 
 	getRequest := &pb.GetRequest{
+		Prefix:    &prefix,
 		Encoding:  pb.Encoding(encoding),
 		Path:      pbPathList,
 		UseModels: pbModelDataList,
