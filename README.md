@@ -63,8 +63,8 @@ Install __go__ in your system https://golang.org/doc/install. Requires golang1.1
 ### Download sources
 
 ```
-go get github.com/google/gnxi
-ls $GOPATH/src/github.com/google/gnxi
+go get github.com/Jandrov/gnxi
+ls $GOPATH/src/github.com/Jandrov/gnxi
 ```
 
 ### Building and installing binaries
@@ -73,7 +73,7 @@ ls $GOPATH/src/github.com/google/gnxi
 cd $GOPATH
 mkdir bin
 # This reads the go modules dependencies for installation
-cd src/github.com/google/gnxi
+cd src/github.com/Jandrov/gnxi
 go install ./...
 ls -la $GOPATH/bin
 ```
@@ -82,7 +82,7 @@ ls -la $GOPATH/bin
 
 ```
 cd $GOPATH/bin
-./../src/github.com/google/gnxi/certs/generate.sh
+./../src/github.com/Jandrov/gnxi/certs/generate.sh
 ```
 
 ### Running a client
