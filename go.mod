@@ -1,4 +1,4 @@
-module github.com/Jandrov/gnxi
+module github.com/google/gnxi
 
 go 1.13
 
